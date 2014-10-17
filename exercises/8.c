@@ -14,40 +14,54 @@ struct node{
 
 struct node *build(void);
 void print(struct node *root);
-void printPaths(struct node *node);
 struct node *insert(struct node *root,int data);
+void printPaths(struct node *node,int path[],int pathLen);
+
 
 main()
 {
 	int sum=3;
+	int pathLen=0;
+	int path[100];
 	struct node *root;
 
 	root=build();
 
-//	printf("\n\n");
-//	print(root);
-//	printf("\n\n");
+	printf("\n\n");
+	print(root);
+	printf("\n\n");
 
-	printPaths(root);
+	printf("root-to-leaf paths are :\n\n");
+	printPaths(root,path,pathLen);
+	printf("\n\n");
 
 }
 
-void printPaths(struct node *node)
+void printPaths(struct node *node,int *path,int pathLen)
 {
+	int i;
+
 	if(node == NULL){
 		printf("\n");
 		return;
 	}
 	else{
-		printf("\t%d",node->data);
-		printPaths(node->left);
-		printPaths(node->right);
+		*(path+pathLen) = node->data;
+		pathLen++;
+
+		if(node->left == NULL && node->right == NULL)
+			for(i=0;i<pathLen;++i)
+				printf("\t%d",path[i]);
+
+		printPaths(node->left,path,pathLen);
+		printPaths(node->right,path,pathLen);
 	}
 }
+
 struct node *build(void)
 {
 	int i,len;
-	int a[]={4,2,5,1,3};
+	int a[]={5,3,1,4,9,6,11,10,15};
 	struct node *root=NULL;
 
 	len=sizeof(a)/sizeof(int);

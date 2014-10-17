@@ -1,7 +1,6 @@
-/*	Given a non-empty binary search tree (an ordered binary tree), return the minimum data value found in that tree.
- *	Note that it is not necessary to search the entire tree.
+/*	Write an isBST() function that returns true if a tree is a binary search tree
+ *	and false otherwise
  */
-
 
 
 #include<stdio.h>
@@ -14,32 +13,58 @@ struct node{
 };
 
 struct node *build(void);
-int minValue(struct node *root);
+int isBST(struct node *node);
 void print(struct node *root);
 struct node *insert(struct node *root,int data);
 
+
 main()
 {
+	int sum=3;
+	int pathLen=0;
+	int path[100];
 	struct node *root;
 
 	root=build();
 
+	printf("\n\n");
 	print(root);
-	printf("\n\nminimum datavalue is %d\n\n",minValue(root));
+	printf("\n\n");
+
+	if(isBST(root))
+		printf("\n\n\tBST\n\n");
+	else
+		printf("\n\n\tnot BST\n\n");
+		
+
 }
 
-int minValue(struct node *root)
+int isBST(struct node *node)
 {
-	if(root->left == NULL)
-		return root->data;
+	int fl,fr;
 
-	minValue(root->left);
+	fl=fr=1;
+
+	if(node == NULL)
+		return 1;
+
+	if(node->left != NULL)
+		if(node->left->data > node->data)
+			return 0;
+	if(node->right != NULL)
+		if(node->right->data <= node->data)
+			return 0;
+
+	fl=isBST(node->left);
+	fr=isBST(node->right);
+
+	return fl && fr;
 }
 
 struct node *build(void)
 {
 	int i,len;
-	int a[]={11,5,7,9,3,2,6,9,6,10,8,20,9,5,3};
+	int a[]={5,3,1,4,9,6,11,10,15};
 	struct node *root=NULL;
 
 	len=sizeof(a)/sizeof(int);
