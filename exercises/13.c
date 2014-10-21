@@ -15,8 +15,7 @@ struct node{
 struct node *build(void);
 int isBST(struct node *node);
 void print(struct node *root);
-struct node *insert(struct node *root,int data);
-
+struct node *newNode(int data);
 
 main()
 {
@@ -41,10 +40,6 @@ main()
 
 int isBST(struct node *node)
 {
-	int fl,fr;
-
-	fl=fr=1;
-
 	if(node == NULL)
 		return 1;
 
@@ -55,39 +50,33 @@ int isBST(struct node *node)
 		if(node->right->data <= node->data)
 			return 0;
 
-	fl=isBST(node->left);
-	fr=isBST(node->right);
-
-	return fl && fr;
+	return isBST(node->left) && isBST(node->right);
 }
 
 struct node *build(void)
 {
 	int i,len;
-	int a[]={5,3,1,4,9,6,11,10,15};
 	struct node *root=NULL;
 
-	len=sizeof(a)/sizeof(int);
-
-	for(i=0;i<len;++i)
-		root=insert(root,a[i]);
+	root=newNode(5);			/*		5		*/
+	root->left=newNode(2);			/*	      /    \		*/
+	root->right=newNode(7);			/*	     2      7		*/
+	root->left->left=newNode(1);		/*	    / \	   / \		*/
+	root->left->right=newNode(6);		/*	   1   6  4   400	*/
+	root->right->left=newNode(4);		
+	root->right->right=newNode(400);
 
 	return root;
 }
 
-struct node *insert(struct node *root,int data)
+struct node *newNode(int data)
 {
-	if(root == NULL){
-		root=malloc(sizeof(*root));
-		root->data=data;
-		root->right=root->left=NULL;
-	}
-	else if(data <= root->data)
-		root->left=insert(root->left,data);
-	else
-		root->right=insert(root->right,data);
+	struct node *new=malloc(sizeof(*new));
 
-	return root;
+	new->data=data;
+	new->right=new->left=NULL;
+
+	return new;
 }
 
 void print(struct node *root)
