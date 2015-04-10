@@ -58,11 +58,11 @@ struct node *build(void)
 	int i,len;
 	struct node *root=NULL;
 
-	root=newNode(5);			/*		5		*/
+	root=newNode(5);				/*			5			*/
 	root->left=newNode(2);			/*	      /    \		*/
 	root->right=newNode(7);			/*	     2      7		*/
-	root->left->left=newNode(1);		/*	    / \	   / \		*/
-	root->left->right=newNode(6);		/*	   1   6  4   400	*/
+	root->left->left=newNode(1);	/*	    / \	   / \		*/
+	root->left->right=newNode(6);	/*	   1   6  4   400	*/
 	root->right->left=newNode(4);		
 	root->right->right=newNode(400);
 
